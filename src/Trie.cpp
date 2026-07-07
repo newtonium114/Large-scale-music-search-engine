@@ -183,6 +183,7 @@ int main() {
     auto buildStart = chrono::high_resolution_clock::now();
 
 
+    
     for (int i = 0; i < testSongs.size(); i++) {
 
         songTrie.insert(testSongs[i]);
@@ -203,9 +204,11 @@ int main() {
         cout << "Love Story not found." << endl;
     } 
     
+    
     else {
     
         for (int i = 0; i < exactMatches.size(); i++) {
+            
             cout << "Found! " << exactMatches[i].title << " - " << exactMatches[i].artist
                  << " (" << exactMatches[i].genre << ", popularity " << exactMatches[i].popularity << ")" << endl;
         }
@@ -215,7 +218,9 @@ int main() {
 
     vector<Song> notFound = songTrie.search("Love Song");
     
+  
     if (notFound.empty()) {
+        
         cout << "Love Song not found (this is expected, it's not in the trie)." << endl;
     }
 
@@ -223,6 +228,7 @@ int main() {
     vector<Song> matches = songTrie.startsWith("Lov");
     
     for (int i = 0; i < matches.size(); i++) {
+        
         cout << matches[i].title << " - " << matches[i].artist << endl;
     }
 
@@ -230,6 +236,7 @@ int main() {
     vector<Song> matches2 = songTrie.startsWith("Blank");
     
     for (int i = 0; i < matches2.size(); i++) {
+        
         cout << matches2[i].title << " - " << matches2[i].artist << endl;
     }
 
