@@ -337,21 +337,53 @@ Actual benchmark results will be inserted after implementation.
 
 | Test Case | Status |
 |-----------|--------|
-| Main Menu | Pending |
-| Search Song | Pending |
-| Search Artist | Pending |
-| Prefix Search | Pending |
-| Performance | Pending |
-| Invalid Input | Pending |
-| Empty Input | Pending |
-| Song Not Found | Pending |
-| Artist Not Found | Pending |
-| Prefix Not Found | Pending |
-
+| Main Menu | Pass |
+| Search Song | Pass |
+| Search Artist | Pass |
+| Prefix Search | Pass |
+| Performance | Partial Pass |
+| Invalid Input | Pass |
+| Empty Input | Pending Integration |
+| Song Not Found | Pass |
+| Artist Not Found | Pass |
+| Prefix Not Found | Pending Integration |
 ---
 
-# 7. Notes
+# ## Current Testing Results
 
-This document will be updated continuously as the project progresses.
+### Hash Table Test
 
-Final screenshots and benchmark results will be added before submission.
+The Hash Table branch compiled and ran successfully.
+
+Dataset size tested: 100 songs  
+Dataset load time: 0.000765 seconds  
+Hash table build time: 0.000340 seconds  
+Unique title keys: 98  
+Unique artist keys: 79  
+Total current collisions: 10
+
+Exact title search was tested using "Love Story". The program returned two matching songs and completed the search in 7.7 microseconds.
+
+Artist search was tested using "Taylor Swift". The program returned three matching songs and completed the search in 7.3 microseconds.
+
+A not-found test was performed using "abcdefgxyz". The program correctly displayed "No results found."
+
+### Trie Test
+
+The Trie branch compiled and ran successfully.
+
+Build time: 0.0000782 seconds
+
+Exact search was tested using "Love Story". The program correctly returned "Love Story - Taylor Swift".
+
+A not-found test was performed using "Love Song". The program correctly reported that the song was not found.
+
+Prefix search was tested using "Lov". The program returned five matching songs.
+
+Prefix search was also tested using "Blank". The program returned "Blank Space - Taylor Swift".
+
+### Integration Status
+
+Hash Table and Trie were tested separately and both passed their individual functional tests.
+
+Full integration testing will be completed after the feature branches are merged into the final main branch.
