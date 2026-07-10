@@ -3,13 +3,15 @@
 #include "DatasetProcessor.h"
 #include "HashTable.h"
 #include "UserInterface.h"
+#include "Trie.h"
+
 #include <iostream>
 #include <vector>
 #include <string>
 #include <chrono>
 #include <iomanip>
+#include <filesystem>
 #include <limits>
-#include "Trie.h"
 
 using namespace std;
 
@@ -63,7 +65,20 @@ void buildHashTables(vector<Song>& songs, HashTable& titleTable, HashTable& arti
 
 int main(int argc, char* argv[]) {
 
-    string datasetFile = "../dataset.csv";
+
+    string datasetFile;
+
+    if (filesystem::exists("dataset.csv"))
+        datasetFile = "dataset.csv";
+    else if (filesystem::exists("../dataset.csv"))
+        datasetFile = "../dataset.csv";
+    else if (filesystem::exists("../../dataset.csv"))
+        datasetFile = "../../dataset.csv";
+    else {
+        cerr << "Cannot find dataset.csv" << endl;
+        return 1;
+    }
+
 
     //Can still pass the real dataset path from the command line later
     if (argc >= 2)

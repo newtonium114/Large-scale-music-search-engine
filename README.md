@@ -99,6 +99,8 @@ Open the project in **CLion**.
 
 CLion will automatically load the CMake project.
 
+Ensure `dataset.csv` is located in the project root directory.
+
 Build the project by selecting:
 
 ```text
