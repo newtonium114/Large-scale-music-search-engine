@@ -4,9 +4,33 @@
 //
 
 #include "UserInterface.h"
+
+#include "TextUtils.h"
+#include "Song.h"
+#include "HashTable.h"
+#include "Trie.h"
+
 #include <iostream>
 #include <limits>
+
 using namespace std;
+
+UserInterface::UserInterface(
+    vector<Song>& songs,
+    HashTable& titleTable,
+    HashTable& artistTable,
+    Trie& songTrie,
+    double hashBuildTime,
+    double trieBuildTime
+)
+    : songs(songs),
+      titleTable(titleTable),
+      artistTable(artistTable),
+      songTrie(songTrie),
+      hashBuildTime(hashBuildTime),
+      trieBuildTime(trieBuildTime)
+{
+}
 
 void UserInterface::displayMainMenu()
 {

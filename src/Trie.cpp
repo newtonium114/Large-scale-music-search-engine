@@ -3,14 +3,10 @@
 // Role: Trie Implementation + Performance Analysis (Abhay)
 // The Trie stores song titles character by character. Each node that completes a full song title also stores the full Song info (title, artist, genre, popularity) so we can look up more than just the name
 
-#include <iostream>
-#include <string>
-#include <unordered_map>
-#include <vector>
-#include <chrono> 
+#include "Trie.h"
+#include "TextUtils.h"
+
 using namespace std;
-#include "../Song.h"
-#include "../TextUtils.h"
 
 // Represents one song from the dataset
 // struct Song {
@@ -21,38 +17,12 @@ using namespace std;
 // };
 
 
-// One node in the Trie. Each node represents one character
-
-struct TrieNode {
-
-    unordered_map<char, TrieNode*> children; 
-    bool isEndOfTitle;                       
-    vector<Song> songs;                       
-
-
-    TrieNode() {
-        isEndOfTitle = false;
-    }
-};
-
-
-
-class Trie {
-    
-private:
-    TrieNode* root;
-
-
-    
-public:
-
-    Trie() {
-
+Trie::Trie() {
         root = new TrieNode();
     }
 
 
-    void insert(Song song) {
+void Trie::insert(Song song) {
 
 
         TrieNode* current = root;
@@ -80,9 +50,7 @@ public:
 
     // Exact search. Returns every song stored under this exact title
 
-
-
-    vector<Song> search(string title) {
+vector<Song> Trie::search(string title) {
         TrieNode* current = root;
 
         title = normalizeText(title);
@@ -110,10 +78,8 @@ public:
     }
 
 
-
-
     // Prefix search (autocomplete). Returns every song whose title starts with the given prefix.
-    vector<Song> startsWith(string prefix) {
+vector<Song> Trie::startsWith(string prefix) {
 
         vector<Song> results;
         TrieNode* current = root;
@@ -138,12 +104,9 @@ public:
     }
 
 
+// Helper function that walks every branch below "node" and collects every song it finds, using recursion (DFS)
 
-
-    private:
-    // Helper function that walks every branch below "node" and collects every song it finds, using recursion (DFS)
-
-    void collectSongs(TrieNode* node, vector<Song> &results) {
+void Trie::collectSongs(TrieNode* node, vector<Song> &results) {
 
         if (node->isEndOfTitle) {
 
@@ -163,8 +126,6 @@ public:
             collectSongs(nextNode, results);
         }
     }
-};
-
 
 
 // int main() {

@@ -6,9 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(Group6MusicSearch
-        main.cpp
-        DatasetProcessor.cpp
-        HashTable.cpp
+        src/main.cpp
+        src/DatasetProcessor.cpp
+        src/HashTable.cpp
         src/Trie.cpp
         src/UserInterface.cpp
+        src/Trie.h
 )
