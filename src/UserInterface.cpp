@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <limits>
+#include <iomanip>
 
 using namespace std;
 
@@ -107,29 +108,38 @@ void UserInterface::searchSongUI()
     cin.ignore();
     getline(cin, songName);
 
-    // TODO:
-    // Replace this mock data with Hash Table search results
-    vector<string> results =
-    {
-        "Love Story - Taylor Swift",
-        "Love Story (Taylor's Version)",
-        "Love Story (Acoustic)"
-    };
+    vector<int> indexes =
+    titleTable.search(normalizeText(songName));
 
     cout << endl;
     cout << "----------------------------------------------" << endl;
     cout << "Results Found:" << endl;
     cout << "----------------------------------------------" << endl;
 
-    if (results.empty())
+    if (indexes.empty())
     {
         cout << "No songs found." << endl;
     }
     else
     {
-        for (int i = 0; i < results.size(); i++)
+        int limit = indexes.size();
+
+        if (limit > 20)
+            limit = 20;
+
+        for (int i = 0; i < limit; i++)
         {
-            cout << i + 1 << ". " << results[i] << endl;
+            Song song = songs[indexes[i]];
+
+            cout << i + 1 << ". "
+                 << song.name
+                 << " | "
+                 << song.artist
+                 << " | "
+                 << song.genre
+                 << " | popularity: "
+                 << song.popularity
+                 << endl;
         }
     }
 
@@ -150,31 +160,41 @@ void UserInterface::searchArtistUI()
     cin.ignore();
     getline(cin, artistName);
 
-    // TODO:
-    // Replace this mock data with Hash Table search results
-    vector<string> results =
-    {
-        "Love Story",
-        "Blank Space",
-        "Cruel Summer",
-        "Shake It Off",
-        "Anti-Hero"
-    };
+
+    vector<int> indexes =
+    artistTable.search(normalizeText(artistName));
 
     cout << endl;
     cout << "----------------------------------------------" << endl;
     cout << "Results Found" << endl;
     cout << "----------------------------------------------" << endl;
 
-    if (results.empty())
+    if (indexes.empty())
     {
         cout << "No songs found." << endl;
     }
     else
     {
-        for (int i = 0; i < results.size(); i++)
+        int limit = indexes.size();
+
+        if (limit > 20)
+            limit = 20;
+
+        for (int i = 0; i < limit; i++)
         {
-            cout << i + 1 << ". " << results[i] << endl;
+            Song song = songs[indexes[i]];
+
+            cout << i + 1 << ". "
+                 << song.name
+                 << " | "
+                 << song.artist;
+
+            if (!song.genre.empty())
+                cout << " | " << song.genre;
+
+            cout << " | popularity: "
+                 << song.popularity
+                 << endl;
         }
     }
 
@@ -195,31 +215,50 @@ void UserInterface::prefixSearchUI()
     cin.ignore();
     getline(cin, prefix);
 
-    // TODO:
-    // Replace this mock data with Trie prefix search
-    vector<string> suggestions =
-    {
-        "Love Story",
-        "Love Yourself",
-        "Love Me Like You Do",
-        "Love Again",
-        "Love Somebody"
-    };
+
+    vector<Song> results =
+        songTrie.startsWith(normalizeText(prefix));
 
     cout << endl;
     cout << "----------------------------------------------" << endl;
     cout << "Suggestions" << endl;
     cout << "----------------------------------------------" << endl;
 
-    if (suggestions.empty())
+    if (results.empty())
     {
         cout << "No matching songs found." << endl;
     }
     else
     {
-        for (int i = 0; i < suggestions.size(); i++)
+        int limit = results.size();
+
+        if (limit > 20)
+            limit = 20;
+
+        for (int i = 0; i < limit; i++)
         {
-            cout << i + 1 << ". " << suggestions[i] << endl;
+            cout << i + 1 << ". "
+                 << results[i].name
+                 << " | "
+                 << results[i].artist;
+
+            if (!results[i].genre.empty())
+                cout << " | " << results[i].genre;
+
+            cout << " | popularity: "
+                 << results[i].popularity
+                 << endl;
+        }
+
+        if (results.size() > limit)
+        {
+            cout << endl;
+            cout << "Showing first "
+                 << limit
+                 << " of "
+                 << results.size()
+                 << " results."
+                 << endl;
         }
     }
 
@@ -236,17 +275,27 @@ void UserInterface::performanceComparisonUI()
     cout << "==============================================" << endl;
 
     cout << endl;
-    cout << "Dataset Size: 170,000+ Spotify Songs" << endl;
+    cout << "Dataset Size: " << songs.size() << " Songs" << endl;
 
     cout << endl;
     cout << "------------------------------------------------------------" << endl;
-    cout << "Data Structure        Build Time      Search Time" << endl;
+    cout << "Data Structure        Build Time      Search Type" << endl;
     cout << "------------------------------------------------------------" << endl;
 
-    // TODO:
-    // Replace these placeholder values with actual benchmark results
-    cout << "Trie                  N/A             N/A" << endl;
-    cout << "Hash Table            N/A             N/A" << endl;
+
+    cout << fixed << setprecision(2);
+
+    cout << left
+         << setw(20) << "Trie"
+         << setw(18) << trieBuildTime
+         << "Prefix Search"
+         << endl;
+
+    cout << left
+         << setw(20) << "Hash Table"
+         << setw(18) << hashBuildTime
+         << "Exact Search"
+         << endl;
 
     cout << "------------------------------------------------------------" << endl;
 

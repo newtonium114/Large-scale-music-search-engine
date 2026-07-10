@@ -12,9 +12,6 @@
 #include <string>
 #include <vector>
 
-// Trie is currently defined separately.
-// A forward declaration is enough for storing a reference here.
-class Trie;
 
 class UserInterface {
 
